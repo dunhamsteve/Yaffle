@@ -30,14 +30,14 @@ ttMain fname
          -- And we're off. Process the commands from the input file...
          traverse_ processCommand cmds
          -- ...and start the REPL
-         repl
+         -- repl
 
 usage : String
 usage = "Usage: yaffle <input file>"
 
 main : IO ()
 main
-    = do (_ :: fname :: []) <- getArgs
+    = do (_ :: _ :: fname :: []) <- getArgs
              | _ => do putStrLn usage
                        exitWith (ExitFailure 1)
          coreRun (ttMain fname)

@@ -183,10 +183,19 @@ traverseList1 f xxs
           xs = tail xxs in
           [| f x ::: traverse f xs |]
 
+
+export
+traverseVect' : (a -> CoreE err b) -> Vect n a -> Vect m b -> CoreE err (Vect (n+ m) b)
+traverseVect' f [] ys = rewrite plusZeroLeftNeutral m in pure $ reverse ys
+traverseVect' {n=S k} f (x :: xs) ys = 
+  rewrite plusSuccRightSucc k m in 
+  traverseVect' f xs (!(f x) :: ys)
+
 export
 traverseVect : (a -> CoreE err b) -> Vect n a -> CoreE err (Vect n b)
-traverseVect f [] = pure []
-traverseVect f (x :: xs) = [| f x :: traverseVect f xs |]
+traverseVect f xs = rewrite sym $ plusZeroRightNeutral n in traverseVect' f xs []
+-- traverseVect f [] = pure []
+-- traverseVect f (x :: xs) = [| f x :: traverseVect f xs |]
 
 export
 traverseSnocList : (a -> CoreE err b) -> SnocList a -> CoreE err (SnocList b)

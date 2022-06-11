@@ -120,6 +120,6 @@ modules
     TTMain.REPL
 
 main = TTMain.Main
-executable = yaffle
-
+executable = "yaffle.js"
+opts = "--cg node"
 -- opts = "--profile"
