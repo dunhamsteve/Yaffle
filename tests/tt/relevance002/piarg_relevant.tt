@@ -1,0 +1,6 @@
+data T : Type where {
+    MkT : T
+}
+
+test : Type;
+test = pi a : (case MkT of MkT => Integer) . T;
